@@ -1,14 +1,5 @@
 import requests
 import json
-# import pandas as pd
-
-# SELECT 								  0 AS amount,
-#                                         scadenza AS due_date,
-#                                         destinatario AS fiscal_code,
-#                                         false AS invalid_after_due_date,
-#                                         testo AS markdown,
-#                                         1 AS notice_number,
-#                                         titolo AS subject FROM messages
 
 def main(args):
 
@@ -33,15 +24,15 @@ def main(args):
 	try:
 		r = requests.post(args.get("url"), json={'query': query})
 	except requests.exceptions.RequestException as e:
-		print(e)
-		#json_data = json.loads(str(e))
-		#print(json_data)
-		return {"body": str(e)}
+		res = {}
+		res.update(data = str(e))
+		json_result = json.dumps(res)
+		print(json_result)
+		return {"body": json_result}
 
 	json_data = json.loads(r.text)
-
 	# parse json_data to add fixed fields (should be made by the query?)	
 	for item in json_data['data']['data']:
     		item.update(amount = 0, invalid_after_due_data = False, notice_number = 1)
-	print(json_data)
+	print(json_data['data'])
 	return {"body": json_data['data']}
