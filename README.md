@@ -1,3 +1,3 @@
 # io-sdk-python
 
-DO NOT USE - work in progress, not ready yet
+Python importer using a graphpl endpoint
